@@ -3,6 +3,10 @@ A Wordpress custom range slider built as a Visual Composer Element. Allows user 
 
 Similar idea to the range slider on [Redfin's](https://www.redfin.com/) homepage.
 
+To add this element to your Wordpress site add the files into your current theme folder and add the following line to your /wp-content/themes/theme_name/functions.php file:
+
+`include __DIR__ . '/directory/of/files';` 
+
 Here's what it looks like in action:
 
 <img src="https://i.imgur.com/M2uS0Uo.gif" width=500 />
@@ -10,3 +14,4 @@ Here's what it looks like in action:
 The Visual Composer settings are:
 
 <img src="https://i.imgur.com/P4bQoL6.png" width=44% /> <img src="https://i.imgur.com/Kvqh0Lr.png" width=53.53%  />
+
