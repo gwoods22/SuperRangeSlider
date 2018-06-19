@@ -40,6 +40,7 @@ Jun 2018 -->
     width: 100%;
     height: 2px;
     height: <?php echo $atts['slider-height']; ?>px;
+    background: #d3d3d3;
     background: <?php echo $atts['slider-color']; ?>;
     outline: none;
     opacity: 0.7;
@@ -67,7 +68,9 @@ Jun 2018 -->
     height: 40px;
     border-radius: 35px;
     cursor: pointer;
-    border: 7px solid <?php echo $atts['knob-border-color']; ?>;
+    border: 7px solid #b0b0b0;
+    border-color: <?php echo $atts['knob-border-color']; ?>;
+    background: #000;
     background: <?php echo $atts['knob-color']; ?>;
   }
 
@@ -79,19 +82,15 @@ Jun 2018 -->
     height: 28px;
     border-radius: 35px;
     cursor: pointer;
-    border: 7px solid <?php echo $atts['knob-border-color']; ?>;
+    border: 7px solid #b0b0b0;
+    border-color: <?php echo $atts['knob-border-color']; ?>;
+    background: #000;
     background: <?php echo $atts['knob-color']; ?>;
   }
 
   .srs-range-slider::-moz-range-track {
     background: #d3d3d3
   }
-
-  /*
-
-  bar height = 2px
-    .srs-arrow... { top: -20px } moves half as fast as ^
-  */
 
 
 
@@ -111,7 +110,8 @@ Jun 2018 -->
   }
 
   .srs-arrow-left, .srs-arrow-right {
-    border: solid <?php echo $atts['arrow-color']; ?>;
+    border: solid #d3d3d3;
+    border-color: <?php echo $atts['arrow-color']; ?>;
     border-width: 0 2px 2px 0;
     display: inline-block;
     height: 16px;
@@ -225,9 +225,13 @@ Jun 2018 -->
 		let base = price[index];
 		//gap between current price value (base) and next price value
 		let gap = price[index+1] - price[index];
-		//						|	 fraction of range gap |  *  | gap | + | base price	|
-		return round( (input-floor)/(ceil-floor)  *    gap   +      base     );
+		//					       	|	 fraction of range gap |  *  | gap | + | base price	|
+		let result = round( (input-floor)/(ceil-floor)  *    gap   +      base     );
 		//use    ^^ round function to round to nearest 25,000
+
+    if (result < minPrice) return minPrice;
+    else return result;
+
 	}
 
 
@@ -256,29 +260,28 @@ Jun 2018 -->
    * Read PHP args and set defaults
    */
   var title = '<?php echo $atts['title']; ?>'
-  if (title === '') title = "You Could Save"
+  if (title == '') { title = "You Could Save"; }
 
-  try { eval("var hideArrows = <?php echo $atts['hide-arrows']; ?>") }
-  catch (e) { var hideArrows = false; }
+  var hideArrows = parseInt("<?php echo $atts['hide-arrows']; ?>");
+  if (isNaN(hideArrows)) { hideArrows = false; }
 
-  try { eval("var minPrice = <?php echo $atts['min-price']; ?>;") }
-  catch (e) { var minPrice = 200000; }
+  var minPrice = parseInt("<?php echo $atts['min-price']; ?>")
+  if (isNaN(minPrice)) { minPrice = 200000; }
 
-  try { eval("var midPrice = <?php echo $atts['mid-price']; ?>;") }
-  catch (e) { var midPrice = 800000; }
+  var midPrice = parseInt("<?php echo $atts['mid-price']; ?>")
+  if (isNaN(midPrice)) { midPrice = 800000; }
 
-  try { eval("var maxPrice = <?php echo $atts['max-price']; ?>;") }
-  catch (e) { var maxPrice = 2000000; }
+  var maxPrice = parseInt("<?php echo $atts['max-price']; ?>")
+  if (isNaN(maxPrice)) { maxPrice = 2000000; }
 
-  try { eval("var intervals = <?php echo $atts['intervals']; ?>;") }
-  catch (e) { var intervals = 25000; }
+  var intervals = parseInt("<?php echo $atts['intervals']; ?>")
+  if (isNaN(intervals)) { intervals = 25000; }
 
-  try { eval("var saveDecimal = <?php echo $atts['save-decimal']; ?>;") }
-  catch (e) { var saveDecimal = 0.01695; }
+  var saveDecimal = parseFloat("<?php echo $atts['save-decimal']; ?>");
+  if (isNaN(saveDecimal)) { saveDecimal = parseFloat(0.01695);}
+
 
   var className = '<?php echo $atts['class-name']; ?>';
-
-
   /*
    * Set Labels
    */
@@ -293,11 +296,10 @@ Jun 2018 -->
    */
   if (hideArrows) {
     hide();
-    console.log("hidden");
   }
 	//These are the slider values at a corresponding percentage of the range
   var price = [minPrice, midPrice, maxPrice];
-	var range = [    0,      500,      1000  ];
+	var range = [    1,      500,      1000  ];
 
 
 

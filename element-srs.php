@@ -25,14 +25,24 @@ class SL_VC_Element_SRS {
         [
 					'type' => 'dropdown',
 					'value' => array(
-						'Yes' => 'false',
-						'No'  => 'true'
+						'Yes' => '0',
+						'No'  => '1'
 					),
 					'holder' => 'div',
 					'class' => '',
 					'std' => 'Yes',
 					'heading' => __( 'Show Arrows', '' ),
 					'param_name' => 'hide-arrows',
+					'group' => 'Content'
+				],
+        [
+					'type' => 'textfield',
+					'holder' => 'div',
+					'class' => '',
+          'heading' => __( 'Interval Value', '' ),
+          'description' => __( 'Intervals that the slider will lock to. Min, Mid, and Max must all be multiples of this.', '' ),
+					'param_name' => 'intervals',
+					'value' => '25000',
 					'group' => 'Content'
 				],
         [
@@ -63,16 +73,6 @@ class SL_VC_Element_SRS {
           'description' => __( 'High end of the slider', '' ),
 					'param_name' => 'max-price',
 					'value' => '2000000',
-					'group' => 'Content'
-				],
-        [
-					'type' => 'textfield',
-					'holder' => 'div',
-					'class' => '',
-          'heading' => __( 'Interval Value', '' ),
-          'description' => __( 'Intervals that the slider will lock to', '' ),
-					'param_name' => 'intervals',
-					'value' => '25000',
 					'group' => 'Content'
 				],
         [
